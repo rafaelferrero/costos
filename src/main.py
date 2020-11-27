@@ -12,6 +12,7 @@ V1.0: The Excel have an specific structure, and the resulting .csv file too.
 # https://github.com/mauricelam/hashbang
 from hashbang import command
 
+
 @command
 def main(argument=None):
     pass
