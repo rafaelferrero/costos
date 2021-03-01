@@ -1,21 +1,40 @@
 # Author: Rafael E. Ferrero
-"""This program receive an Excel file and extract specific data into .csv file
 
-V1.0: The Excel have an specific structure, and the resulting .csv file too.
-    The .csv file will be used to upload into Oracle Netsuite for Standard
-    Cost valuation module.
-    The .xls or .xlsx origin file must be located as indicated in settings.py
-    The .csv resulting file will be located as indicated in settings.py, other
-    way will be located in the same directory of Excel file.
+"""
+    This program receive an Excel file and extract specific data into .csv file
 """
 
-# https://github.com/mauricelam/hashbang
-from hashbang import command
+
+import pyexcel as pe  # http://docs.pyexcel.org/
+from datetime import datetime as dt
+from settings import (
+    OUTPUT_FILE,
+    archivos,
+    )
 
 
-@command
-def main(argument=None):
-    pass
+def get_str_timestamp():
+    return str(int(dt.timestamp(dt.now())))
+
+
+def main():
+    export = []
+    for k in archivos.keys():
+        book = pe.get_book(
+            file_name=archivos[k]["nombre_archivo"],
+            sheets=[archivos[k]["nombre_hoja"],]
+            )
+        for r in range(5, len(book[archivos[k]["nombre_hoja"]])):
+            temp = {}
+            for c in archivos[k]["columnas"].keys():
+                temp.update({
+                    c: book[
+                        archivos[k]["nombre_hoja"]][
+                            r, archivos[k]["columnas"][c]]
+                })
+            export.append(temp)
+    output_file = pe.get_sheet(records=export)
+    output_file.save_as(OUTPUT_FILE)
 
 
 if __name__ == "__main__":

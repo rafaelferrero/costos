@@ -1,7 +1,9 @@
 argcomplete==1.12.2
-hashbang==0.1.14
-numpy==1.19.4
-pandas==1.1.4
-python-dateutil==2.8.1
-pytz==2020.4
-six==1.15.0
+et-xmlfile==1.0.1
+jdcal==1.4.1
+lml==0.1.0
+openpyxl==3.0.5
+pyexcel==0.6.6
+pyexcel-io==0.6.4
+pyexcel-xlsx==0.6.0
+texttable==1.6.3
