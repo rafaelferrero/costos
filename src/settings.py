@@ -2,14 +2,15 @@
 
 
 # BASE_PATH = "\\\srv-plm\InnovAx-PLM\\0.TCX-Docs\\70.CostoEstandar\\"
-BASE_PATH = "C:\\Users\\ferreror\\Desktop\\"
+INPUT_PATH = "C:\\Users\\ferreror\\Desktop\\"
+OUTPUT_PATH = "C:\\Users\\ferreror\\Desktop\\"
 
-MAESTRO_COMERCIALES = BASE_PATH + "MaestroComerciales.xlsx"
-MAESTRO_MP = BASE_PATH + "MaestroMP.xlsx"
-MAESTRO_COMPRAS = BASE_PATH + "MaestroP_Compra.xlsx"
-MAESTRO_WA = BASE_PATH + "COSTO WA.xlsx"
+MAESTRO_COMERCIALES = INPUT_PATH + "MaestroComerciales.xlsx"
+MAESTRO_MP = INPUT_PATH + "MaestroMP.xlsx"
+MAESTRO_COMPRAS = INPUT_PATH + "MaestroP_Compra.xlsx"
+MAESTRO_WA = INPUT_PATH + "COSTO WA.xlsx"
 
-archivos = {
+piezas = {
     "comerciales": {
         "nombre_archivo": MAESTRO_COMERCIALES,
         "nombre_hoja": "Sheet1",
@@ -45,4 +46,3 @@ archivos = {
             }
         },
 """
-OUTPUT_FILE = BASE_PATH + "ParaNetsuite.csv"
