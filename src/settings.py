@@ -5,6 +5,9 @@
 INPUT_PATH = "C:\\Users\\ferreror\\Desktop\\"
 OUTPUT_PATH = "C:\\Users\\ferreror\\Desktop\\"
 
+OUTPUT_WA = OUTPUT_PATH + "costo-workareas.csv"
+OUTPUT_ITEMS = OUTPUT_PATH + "costo-piezas.csv"
+
 MAESTRO_COMERCIALES = INPUT_PATH + "MaestroComerciales.xlsx"
 MAESTRO_MP = INPUT_PATH + "MaestroMP.xlsx"
 MAESTRO_COMPRAS = INPUT_PATH + "MaestroP_Compra.xlsx"
@@ -36,13 +39,14 @@ piezas = {
             }
         },
     }
-"""
+
+workareas = {
     "work_areas": {
         "nombre_archivo": MAESTRO_WA,
         "nombre_hoja": "Salida",
         "columnas": {
-            "codigo": 1,
-            "costo": 4,
+            "codigo": 0,
+            "costo": 3,
             }
         },
-"""
+    }
