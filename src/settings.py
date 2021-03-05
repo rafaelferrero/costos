@@ -17,6 +17,7 @@ piezas = {
     "comerciales": {
         "nombre_archivo": MAESTRO_COMERCIALES,
         "nombre_hoja": "Sheet1",
+        "linea_inicial": 5,
         "columnas": {
             "codigo": 0,
             "costo": 14,
@@ -25,6 +26,7 @@ piezas = {
     "materias_primas": {
         "nombre_archivo": MAESTRO_MP,
         "nombre_hoja": "Sheet1",
+        "linea_inicial": 5,
         "columnas": {
             "codigo": 0,
             "costo": 19,
@@ -33,6 +35,7 @@ piezas = {
     "compras": {
         "nombre_archivo": MAESTRO_COMPRAS,
         "nombre_hoja": "Sheet1",
+        "linea_inicial": 5,
         "columnas": {
             "codigo": 1,
             "costo": 10,
@@ -44,6 +47,7 @@ workareas = {
     "work_areas": {
         "nombre_archivo": MAESTRO_WA,
         "nombre_hoja": "Salida",
+        "linea_inicial": 1,
         "columnas": {
             "codigo": 0,
             "costo": 3,
