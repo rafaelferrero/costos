@@ -2,9 +2,10 @@
 
 
 # BASE_PATH = "\\\srv-plm\InnovAx-PLM\\0.TCX-Docs\\70.CostoEstandar\\"
-INPUT_PATH = "C:\\Users\\ferreror\\Desktop\\"
+INPUT_PATH = "C:\\Users\\ferreror\\Desktop\\costos\\"
 OUTPUT_PATH = "C:\\Users\\ferreror\\Desktop\\"
 
+OUTPUT_CT = OUTPUT_PATH + "cost-templates.csv"
 OUTPUT_WA = OUTPUT_PATH + "costo-workareas.csv"
 OUTPUT_ITEMS = OUTPUT_PATH + "costo-piezas.csv"
 

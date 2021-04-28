@@ -12,6 +12,7 @@ from hashbang import command
 from sys import exit
 from settings import (
     OUTPUT_PATH,
+    OUTPUT_CT,
     OUTPUT_WA,
     OUTPUT_ITEMS,
     piezas,
@@ -25,7 +26,7 @@ def get_str_timestamp():
 
 def logerror(mensaje):
     with open(OUTPUT_PATH + "error_exportacion.txt", "a") as f:
-        f.write("<<<" + get_str_timestamp() + ">>>   "+ mensaje + "\n")
+        f.write("<<<" + get_str_timestamp() + ">>>   " + mensaje + "\n")
 
 
 def makemsg(file_name="", number_row=0, field_name="", field_value=""):
@@ -43,7 +44,7 @@ def makemsg(file_name="", number_row=0, field_name="", field_value=""):
         msg += "el valor es '{}', ".format(field_value)
     msg += "y debería ser un valor numerico mayor a cero"
 
-    return(msg)
+    return msg
 
 
 @command
@@ -53,7 +54,7 @@ def main():
     try:
         wabook = pe.get_book(
             file_name=workareas["work_areas"]["nombre_archivo"],
-            sheets=[workareas["work_areas"]["nombre_hoja"],]
+            sheets=[workareas["work_areas"]["nombre_hoja"], ]
         )
     except:
         logerror("No se encuentra el archivo {}".format(
@@ -63,11 +64,14 @@ def main():
         exit(2)
 
     csvwa = []
+    csvct = []
+    autonum = 0
     for r in range(
             workareas["work_areas"]["linea_inicial"],
             len(wabook[workareas["work_areas"]["nombre_hoja"]])):
 
         temp = {}
+        autonum += 1
         for c in workareas["work_areas"]["columnas"].keys():
             flag = True
             valor = wabook[
@@ -77,15 +81,21 @@ def main():
             try:
                 if not valor:
                     flag = False
-                elif (c=="costo" and not float(valor)):
+                elif c == "costo" and not float(valor):
                     flag = False
-                elif (c=="costo" and float(valor)<0):
+                elif c == "costo" and float(valor) < 0:
                     flag = False
             except:
                 flag = False
 
-            if c=="codigo":
+            if c == "codigo":
                 temp.update({c: valor[11:-6]})
+                csvct.append({
+                    "External ID": autonum,
+                    "Name": valor[11:-6],
+                    "Cost Category": "Costo productivo",
+                    "Item": valor[11:-6],
+                })
             else:
                 temp.update({c: valor})
 
@@ -107,13 +117,16 @@ def main():
     output_file = pe.get_sheet(records=csvwa)
     output_file.save_as(OUTPUT_WA)
 
+    output_file = pe.get_sheet(records=csvct)
+    output_file.save_as(OUTPUT_CT)
+
     # Proceso de archivo de costos de materiales e items comerciales
     csvpiezas = []
     for k in piezas.keys():
         try:
             book = pe.get_book(
                 file_name=piezas[k]["nombre_archivo"],
-                sheets=[piezas[k]["nombre_hoja"],]
+                sheets=[piezas[k]["nombre_hoja"], ]
                 )
         except:
             logerror("No se encuentra el archivo {}".format(
@@ -122,8 +135,7 @@ def main():
             logerror("Finalizado con errores graves. NO ENVIAR CSV!!!")
             exit(2)
 
-        for r in range(
-            piezas[k]["linea_inicial"], len(book[piezas[k]["nombre_hoja"]])):
+        for r in range(piezas[k]["linea_inicial"], len(book[piezas[k]["nombre_hoja"]])):
             temp = {}
             for c in piezas[k]["columnas"].keys():
                 flag = True
@@ -133,14 +145,14 @@ def main():
                 try:
                     if not valor:
                         flag = False
-                    elif (c=="costo" and not float(valor)) :
+                    elif c == "costo" and not float(valor):
                         flag = False
-                    elif (c=="costo" and float(valor)<0):
+                    elif c == "costo" and float(valor) < 0:
                         flag = False
                 except:
                     flag = False
 
-                if (c=="codigo" and len(valor)>8):
+                if c == "codigo" and len(valor) > 8:
                     temp.update({c: valor[:-2]})
                 else:
                     temp.update({c: valor})
@@ -163,6 +175,7 @@ def main():
     output_file = pe.get_sheet(records=csvpiezas)
     output_file.save_as(OUTPUT_ITEMS)
     logerror("Finalizamos el proceso!!!")
+
 
 if __name__ == "__main__":
     main.execute()

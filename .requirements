@@ -1,5 +1,6 @@
 argcomplete==1.12.2
 et-xmlfile==1.0.1
+hashbang==0.1.14
 jdcal==1.4.1
 lml==0.1.0
 openpyxl==3.0.5
